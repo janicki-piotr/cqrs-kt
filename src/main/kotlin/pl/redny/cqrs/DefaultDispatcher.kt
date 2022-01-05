@@ -28,11 +28,11 @@ class DefaultDispatcher(
         this.processors.addAll(processors)
     }
 
-    override fun dispatchCommand(command: Command): Result<Void> {
-        val commandHandler = findCommandHandler(command, commandHandlers)
+    override fun dispatchCommand(command: Command): Result<Unit> {
         return try {
+            val commandHandler = findCommandHandler(command, commandHandlers)
             processCommandProcessors(command, commandHandler, findPreProcessors(processors))
-            val result: Result<Void> = commandHandler.execute(command)
+            val result: Result<Unit> = commandHandler.execute(command)
             processCommandProcessors(command, commandHandler, findPostProcessors(processors))
 
             result
@@ -56,8 +56,8 @@ class DefaultDispatcher(
     }
 
     override fun dispatchQuery(query: Query): Result<*> {
-        val queryHandler: QueryHandler<Query, *> = findQueryHandler(query, queryHandlers)
         return try {
+            val queryHandler: QueryHandler<Query, *> = findQueryHandler(query, queryHandlers)
             processQueryProcessors(query, queryHandler, findPreProcessors(processors))
             val result: Result<*> = queryHandler.execute(query)
             processQueryProcessors(query, queryHandler, findPostProcessors(processors))
@@ -83,10 +83,14 @@ class DefaultDispatcher(
     }
 
     private fun findPreProcessors(processors: List<Processor>): List<Processor> {
-        return processors.filter { it.type == Processor.ProcessorType.PRE_PROCESSOR || it.type == Processor.ProcessorType.DUPLEX_PROCESSOR }
+        return processors.filter {
+            it.type == Processor.ProcessorType.PRE_PROCESSOR || it.type == Processor.ProcessorType.DUPLEX_PROCESSOR
+        }
     }
 
     private fun findPostProcessors(processors: List<Processor>): List<Processor> {
-        return processors.filter { it.type == Processor.ProcessorType.POST_PROCESSOR || it.type == Processor.ProcessorType.DUPLEX_PROCESSOR }
+        return processors.filter {
+            it.type == Processor.ProcessorType.POST_PROCESSOR || it.type == Processor.ProcessorType.DUPLEX_PROCESSOR
+        }
     }
 }

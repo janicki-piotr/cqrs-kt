@@ -27,6 +27,7 @@ build/
 *.iml
 !**/testData/**/*.iml
 .idea/*
+.idea
 node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-js-runner/lib/
