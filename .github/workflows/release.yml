@@ -24,3 +24,6 @@ jobs:
         run: ./gradlew jar
       - name: Create Release
         run: ./gradlew publish
+        env:
+          PUBLISH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          PUBLISH_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

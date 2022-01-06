@@ -54,8 +54,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/janicki-piotr/cqrs-kt")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                username = System.getenv("PUBLISH_USERNAME")
+                password = System.getenv("PUBLISH_PASSWORD")
             }
         }
     }
